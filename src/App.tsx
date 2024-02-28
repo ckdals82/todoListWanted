@@ -2,11 +2,7 @@
 
 import List from './components/List';
 
-function App() {
-  //React Hooks
-
-
-
+const App =() => {
   return(
     <List/>
   )

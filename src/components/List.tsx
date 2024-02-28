@@ -1,4 +1,4 @@
-// React App
+// 리액트
 import { useState } from 'react';
 // Material-UI Imports
 import Container from '@material-ui/core/Container';
@@ -15,25 +15,24 @@ import DeleteIcon from '@material-ui/icons/Delete';
 // Other Imports
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../store/store';
-import { addTodo, removeTodo, setTodoStatus } from '../store/todoSlice';
+import { addTodo, deleteTodo, setTodoStatus } from '../store/todoSlice';
+import { ITodoListData } from '../models/Todo';
 
-function List() {
-  //React Hooks
+
+const List =() => {
   const [todoDescription, setTodoDescription] = useState<string>('');
 
-  //React Redux Hooks
   const todoList = useSelector((state: RootState) => state);
   const dispatch = useDispatch<AppDispatch>();
 
-  //Rendering
   return (
     <Container maxWidth='xs'>
-      <Typography style={{ textAlign: 'center' }} variant='h3'>
-        원티드 todoList
+      <Typography style={{ textAlign: 'center' ,marginBottom: '20px' }} variant='h3'>
+        원티드 TodoList
       </Typography>
       <TextField
         variant='outlined'
-        label='To Do Item'
+        label='오늘의 할 일'
         fullWidth
         onChange={(e) => setTodoDescription(e.target.value)}
         value={todoDescription}
@@ -47,10 +46,10 @@ function List() {
           setTodoDescription('');
         }}
       >
-        Add Item
+        등록
       </Button>
-      <div>
-        {todoList.map((todo: any) => (
+      <div style={{marginTop: '20px'}}>
+        {todoList.map((todo: ITodoListData) => (
           <ListItem key={todo.id}>
             <ListItemText
               style={{
@@ -62,7 +61,7 @@ function List() {
             <ListItemSecondaryAction>
               <IconButton
                 onClick={() => {
-                  dispatch(removeTodo(todo.id));
+                  dispatch(deleteTodo(todo.id));
                 }}
               >
                 <DeleteIcon />
